@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YouCord</title>
+<meta name="description" content="YouCord, le client Discord modifié : plus rapide, plus de plugins, mises à jour automatiques vérifiées.">
+<meta property="og:title" content="YouCord">
+<meta property="og:description" content="Tout ce que Discord ne fait pas, on le crée.">
+<meta property="og:image" content="https://i.ibb.co/R4HWcpYH/Chat-GPT-Image-12-juil-2026-19-31-03-removebg-preview.png">
+<meta name="theme-color" content="#0b0a14">
+<link rel="icon" href="https://i.ibb.co/R4HWcpYH/Chat-GPT-Image-12-juil-2026-19-31-03-removebg-preview.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0b0a14;
+  --surface: #14121f;
+  --border: #262338;
+  --text: #ecebf5;
+  --muted: #a09cb8;
+  --accent: #a855f7;
+  --accent-2: #5865f2;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: Inter, system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+a { color: inherit; text-decoration: none; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+
+nav { position: sticky; top: 0; z-index: 10; background: rgba(11, 10, 20, .8); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.2rem; }
+.brand img { width: 32px; height: 32px; }
+nav ul { display: flex; gap: 24px; list-style: none; margin: 0; padding: 0; color: var(--muted); font-weight: 500; }
+nav ul a:hover { color: var(--text); }
+
+.hero { text-align: center; padding: 96px 0 72px; background: radial-gradient(600px 300px at 50% 0, rgba(168, 85, 247, .25), transparent); }
+.hero img { width: 112px; height: 112px; }
+.hero h1 { font-size: clamp(2.4rem, 6vw, 4rem); margin: 16px 0 8px; letter-spacing: -.02em; }
+.hero h1 span { background: linear-gradient(90deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero p { color: var(--muted); font-size: 1.15rem; max-width: 560px; margin: 0 auto 32px; }
+.btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 10px; font-weight: 600; border: 1px solid var(--border); background: var(--surface); transition: transform .15s, border-color .15s; }
+.btn:hover { transform: translateY(-2px); border-color: var(--accent); }
+.btn.primary { background: linear-gradient(90deg, var(--accent), var(--accent-2)); border: none; color: #fff; }
+
+.stats { display: flex; justify-content: center; gap: 48px; flex-wrap: wrap; margin-top: 56px; }
+.stats b { display: block; font-size: 1.8rem; }
+.stats span { color: var(--muted); font-size: .9rem; }
+
+section { padding: 72px 0; }
+h2 { font-size: 2rem; text-align: center; margin: 0 0 40px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 24px; }
+.card h3 { margin: 0 0 6px; font-size: 1.1rem; }
+.card p { margin: 0; color: var(--muted); }
+.icon { font-size: 1.6rem; margin-bottom: 10px; }
+
+.steps { counter-reset: step; max-width: 640px; margin: 0 auto; }
+.step { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 20px; }
+.step::before { counter-increment: step; content: counter(step); flex: none; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; background: linear-gradient(135deg, var(--accent), var(--accent-2)); }
+.step p { margin: 6px 0 0; }
+code { background: var(--surface); border: 1px solid var(--border); padding: 2px 6px; border-radius: 6px; font-size: .9em; }
+
+.platforms { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.pill { padding: 8px 16px; border-radius: 999px; background: var(--surface); border: 1px solid var(--border); color: var(--muted); }
+
+.cta { text-align: center; background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 48px 24px; }
+.cta p { color: var(--muted); margin: 0 0 24px; }
+
+footer { border-top: 1px solid var(--border); padding: 32px 0; color: var(--muted); font-size: .9rem; text-align: center; }
+footer p { margin: 4px 0; }
+
+@media (max-width: 640px) {
+  nav ul { display: none; }
+  .hero { padding: 64px 0 48px; }
+  section { padding: 48px 0; }
+  .stats { gap: 28px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#"><img src="https://i.ibb.co/R4HWcpYH/Chat-GPT-Image-12-juil-2026-19-31-03-removebg-preview.png" alt="">YouCord</a>
+    <ul>
+      <li><a href="#fonctionnalites">Fonctionnalités</a></li>
+      <li><a href="#installation">Installation</a></li>
+      <li><a href="https://discord.gg/hGnBxwejfk">Discord</a></li>
+      <li><a href="https://github.com/nightcordlegit/youcord">GitHub</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <img src="https://i.ibb.co/R4HWcpYH/Chat-GPT-Image-12-juil-2026-19-31-03-removebg-preview.png" alt="Logo YouCord">
+    <h1>Tout ce que Discord ne fait pas,<br><span>on le crée.</span></h1>
+    <p>YouCord est un client Discord modifié, basé sur Equicord et Vencord. Plus rapide, plus complet, et mis à jour automatiquement.</p>
+    <div class="btns">
+      <a class="btn primary" href="https://github.com/nightcordlegit/youcord/releases/latest">⬇ Télécharger</a>
+      <a class="btn" href="https://discord.gg/hGnBxwejfk">Rejoindre le Discord</a>
+    </div>
+    <div class="stats">
+      <div><b>600+</b><span>plugins</span></div>
+      <div><b>5</b><span>plateformes</span></div>
+      <div><b>100%</b><span>open source</span></div>
+    </div>
+  </div>
+</header>
+
+<section id="fonctionnalites">
+  <div class="wrap">
+    <h2>Fonctionnalités</h2>
+    <div class="grid">
+      <div class="card"><div class="icon">⚡</div><h3>Démarrage rapide</h3><p>Aucun code obfusqué : le client se charge plus vite et consomme moins de CPU et de RAM.</p></div>
+      <div class="card"><div class="icon">🔄</div><h3>Mises à jour vérifiées</h3><p>Les mises à jour s'installent en arrière-plan, avec une vérification SHA-256 de chaque fichier.</p></div>
+      <div class="card"><div class="icon">🧩</div><h3>Des centaines de plugins</h3><p>Compatible avec l'écosystème Vencord et Equicord, plus plus d'une centaine de plugins YouCord.</p></div>
+      <div class="card"><div class="icon">🎧</div><h3>Meilleur audio</h3><p>Des modules vocaux optimisés pour un son plus propre et plus fort.</p></div>
+      <div class="card"><div class="icon">🎨</div><h3>Personnalisation</h3><p>Thèmes, icônes et interface plus fluide, avec plein de petites améliorations au quotidien.</p></div>
+      <div class="card"><div class="icon">🌐</div><h3>Aussi dans le navigateur</h3><p>Extension pour Chrome, Firefox et Edge, ou version web autonome.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="installation">
+  <div class="wrap">
+    <h2>Installation sur Windows</h2>
+    <div class="steps">
+      <div class="step"><div><b>Télécharge l'installeur</b><p>Récupère <code>youcord-install.ps1</code> ou <code>YouCord-Installer.exe</code> depuis la <a href="https://github.com/nightcordlegit/youcord/releases/latest" style="color:var(--accent)">dernière version</a>.</p></div></div>
+      <div class="step"><div><b>Lance-le</b><p>Clic droit sur le fichier, puis « Exécuter avec PowerShell ».</p></div></div>
+      <div class="step"><div><b>Choisis ton Discord</b><p>Sélectionne l'installation de Discord à modifier, puis redémarre Discord. C'est tout.</p></div></div>
+    </div>
+    <h2 style="margin-top:56px">Plateformes</h2>
+    <div class="platforms">
+      <span class="pill">Windows</span><span class="pill">macOS</span><span class="pill">Linux</span><span class="pill">Extension navigateur</span><span class="pill">Web</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="cta">
+      <h2 style="margin-bottom:12px">Rejoins la communauté</h2>
+      <p>Support, nouveautés et suggestions de plugins, tout se passe sur le Discord.</p>
+      <div class="btns">
+        <a class="btn primary" href="https://discord.gg/hGnBxwejfk">Rejoindre le Discord</a>
+        <a class="btn" href="https://github.com/nightcordlegit/youcord">Voir le code sur GitHub</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>YouCord est un fork d'<a href="https://github.com/Equicord/Equicord">Equicord</a> et de <a href="https://github.com/Vendicated/Vencord">Vencord</a>, sous licence GPL-3.0.</p>
+    <p>Projet non affilié à Discord Inc. Les clients modifiés ne sont pas autorisés par les conditions d'utilisation de Discord : utilise-le à tes risques.</p>
+  </div>
+</footer>
+
+</body>
+</html>
